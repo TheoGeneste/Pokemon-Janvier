@@ -4,16 +4,24 @@ import 'bootstrap/dist/css/bootstrap.min.css';
 import { BrowserRouter, Routes, Route } from 'react-router-dom';
 import PokemonsPage from './Pages/PokemonsPage';
 import GenerationsPage from './Pages/GenerationsPage';
+import Footer from './Components/Footer';
+import { Container } from 'react-bootstrap';
+import PokemonDetailPage from './Pages/PokemonDetailPage';
 
 function App() {
   return <>
     <BrowserRouter>
       <NavBar />
-      <Routes>
-        <Route path="/" element={<PokemonsPage />} />
-        <Route path="/pokemons" element={<PokemonsPage />} />
-        <Route path='/generations' element={<GenerationsPage />} />
-      </Routes>
+      <Container>
+        <Routes>
+          <Route path="/" element={<PokemonsPage />} />
+          <Route path="/pokemons" element={<PokemonsPage />} />
+          <Route path='/generations' element={<GenerationsPage />} />
+          <Route path='/pokemon/:id' element={<PokemonDetailPage />} />
+        </Routes>
+      </Container>
+      <div className='p-5'></div>
+      <Footer />
     </BrowserRouter>
   </>;
 }
