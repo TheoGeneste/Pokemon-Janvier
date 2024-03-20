@@ -12,6 +12,7 @@ function App() {
   return <>
     <BrowserRouter>
       <NavBar />
+      <div className='p-5'></div>
       <Container>
         <Routes>
           <Route path="/" element={<PokemonsPage />} />
@@ -20,7 +21,6 @@ function App() {
           <Route path='/pokemon/:id' element={<PokemonDetailPage />} />
         </Routes>
       </Container>
-      <div className='p-5'></div>
       <Footer />
     </BrowserRouter>
   </>;

@@ -12,12 +12,12 @@ const NavBar = () => {
 
     //Affichage -> return
     return <>
-        <Navbar expand="lg" className="bg-body-tertiary">
+        <Navbar expand="lg" className="bg-body-tertiary" fixed="top">
             <Container>
                 <Link to={"/"}>
                     <Navbar.Brand>Accueil </Navbar.Brand>
                 </Link>
-                <Navbar.Toggle aria-controls="basic-navbar-nav" />
+                <Navbar.Toggle aria-controls="basic-navbar-nav" />  
                 <Navbar.Collapse id="basic-navbar-nav">
                     <Nav className="me-auto">
                         

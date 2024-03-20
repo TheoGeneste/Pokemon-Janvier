@@ -6,7 +6,6 @@ const PokemonCard = ({nom, url}) => {
     // State
 
     //Comportement
-    console.log(url.slice(33).replaceAll("/", ""));
 
     //Affichage
     return <>
