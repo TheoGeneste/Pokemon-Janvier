@@ -20,22 +20,19 @@ const PokemonDetailPage = () => {
     //Comportement
     const fetchPokemon = async () => {
         const response = await PokemonsService.fetchPokemonByID(id);
-        console.log(response.data);
         setPokemon(response.data);
         const type = await TypeService.fetchTypeByURL(response.data.types[0].type.url);
-        console.log("type : " , type.data);
         setType(type.data);
+        fetchPokemonSpecies(response.data.species.url.slice(42).replaceAll("/", ""))
     }
 
-    const fetchPokemonSpecies = async () => {
-        const response = await PokemonsService.fetchPokemonSpeciesByID(id);
-        console.log("species : ", response.data);
+    const fetchPokemonSpecies = async (idSpecies) => {
+        const response = await PokemonsService.fetchPokemonSpeciesByID(idSpecies);
         setPokemonSpecies(response.data);
     }
 
     useEffect(() => {
         fetchPokemon();
-        fetchPokemonSpecies();
     }, [])
 
     // Affichage
@@ -68,12 +65,12 @@ const PokemonDetailPage = () => {
                 </div>
                 {/* Column right */}
                 <div className='d-flex flex-column col-lg-6 col-12 p-3' id='column-right'>
-                    <h4>{pokemonSpecies.flavor_text_entries && pokemonSpecies.flavor_text_entries[0].flavor_text}</h4>
+                    <h4>{(pokemonSpecies.flavor_text_entries && pokemonSpecies.flavor_text_entries[0] != undefined) && pokemonSpecies.flavor_text_entries[0].flavor_text}</h4>
                     <div className='mt-3'>
                         <h5>Game versions : </h5>
                         <Stack className="flex-wrap p-1" direction="horizontal" gap={2}>
                             {pokemon.game_indices && pokemon.game_indices.map((game) => {
-                                return <h4><Badge bg="secondary">{game.version.name[0].toUpperCase() + game.version.name.slice(1) }</Badge></h4>
+                                return <h4><Badge bg="" className={game.version.name}>{game.version.name[0].toUpperCase() + game.version.name.slice(1)}</Badge></h4>
                             })}
                         </Stack>
                     </div>
@@ -105,27 +102,27 @@ const PokemonDetailPage = () => {
                             })}
                         </Stack>
                     </div>
-                     {/* Faiblesse du pokemon */}
-                     <div className='mt-3'>
+                    {/* Faiblesse du pokemon */}
+                    <div className='mt-3'>
                         <h4>Faiblesses : </h4>
                         <Stack className="flex-wrap p-1" direction="horizontal" gap={2}>
                             {/* SI type.damage_relations existe ou et définie alors je fait mon traitement (.map) */}
                             {type.damage_relations && type.damage_relations.double_damage_from.map((type) => {
                                 return <h3><Badge className={type.name} bg=''>{type.name[0].toUpperCase() + type.name.slice(1)}</Badge></h3>
                             })}
-                        </Stack>    
+                        </Stack>
                     </div>
-                     {/* Force du pokemon */}
-                     <div className='mt-3'>
+                    {/* Force du pokemon */}
+                    <div className='mt-3'>
                         <h4>Fort contre : </h4>
                         <Stack className="flex-wrap p-1" direction="horizontal" gap={2}>
                             {/* SI type.damage_relations existe ou et définie alors je fait mon traitement (.map) */}
                             {type.damage_relations && type.damage_relations.double_damage_to.map((type) => {
                                 return <h3><Badge className={type.name} bg=''>{type.name[0].toUpperCase() + type.name.slice(1)}</Badge></h3>
                             })}
-                        </Stack>    
+                        </Stack>
                     </div>
-                </div>  
+                </div>
             </div>
         </div>
         {/* <h1>Détail Pokemon N°{id}</h1>

@@ -1,14 +1,23 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import Container from 'react-bootstrap/Container';
 import Nav from 'react-bootstrap/Nav';
 import Navbar from 'react-bootstrap/Navbar';
 import NavDropdown from 'react-bootstrap/NavDropdown';
 import { Link } from "react-router-dom";
+import GenerationService from "../Services/GenerationService";
 
 const NavBar = () => {
     // États -> States
-
+    const [generations, setGenerations] = useState([])
     // Comportements -> Les functions
+    const getGeneration = async () => {
+        const response = await GenerationService.fetchGeneration();
+        setGenerations(response.data.results);
+    }
+
+    useEffect(() => {
+        getGeneration()
+    }, [])
 
     //Affichage -> return
     return <>
@@ -17,26 +26,19 @@ const NavBar = () => {
                 <Link to={"/"}>
                     <Navbar.Brand>Accueil </Navbar.Brand>
                 </Link>
-                <Navbar.Toggle aria-controls="basic-navbar-nav" />  
+                <Navbar.Toggle aria-controls="basic-navbar-nav" />
                 <Navbar.Collapse id="basic-navbar-nav">
                     <Nav className="me-auto">
-                        
                         <Nav.Link>
                             <Link to={"/pokemons"}>Pokemons</Link>
                         </Nav.Link>
-                        
                         <NavDropdown title="Générations" id="basic-nav-dropdown">
-                            <NavDropdown.Item>
-                                <Link to={"/generations"}> Génération 1</Link>
-                            </NavDropdown.Item>
-                            <NavDropdown.Item>
-                                Génération 2
-                            </NavDropdown.Item>
-                            <NavDropdown.Item>Génération 3</NavDropdown.Item>
-                            <NavDropdown.Divider />
-                            <NavDropdown.Item>
-                                Génération 4
-                            </NavDropdown.Item>
+                            {generations.map((generation) => {  
+                                return <NavDropdown.Item href={"/generations/"+generation.url.slice(36).replaceAll("/", "")}>
+                                    {generation.name[0].toUpperCase() + generation.name.slice(1)}
+                                    {/* <Link to={"/generations/"+generation.url.slice(36).replaceAll("/", "")} replace >{generation.name[0].toUpperCase() + generation.name.slice(1)}</Link> */}
+                                </NavDropdown.Item>
+                            })}
                         </NavDropdown>
                     </Nav>
                 </Navbar.Collapse>

@@ -17,7 +17,7 @@ function App() {
         <Routes>
           <Route path="/" element={<PokemonsPage />} />
           <Route path="/pokemons" element={<PokemonsPage />} />
-          <Route path='/generations' element={<GenerationsPage />} />
+          <Route path='/generations/:idGeneration' element={<GenerationsPage />} />
           <Route path='/pokemon/:id' element={<PokemonDetailPage />} />
         </Routes>
       </Container>
