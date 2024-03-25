@@ -6,11 +6,13 @@ import NavDropdown from 'react-bootstrap/NavDropdown';
 import { Link } from "react-router-dom";
 import GenerationService from "../Services/GenerationService";
 import TypeService from "../Services/TypeService";
+import VersionService from "../Services/VersionService";
 
 const NavBar = () => {
     // États -> States
     const [generations, setGenerations] = useState([])
     const [types, setTypes] = useState([]);
+    const [versions, setVersions] = useState([]);
 
     // Comportements -> Les functions
     const getGeneration = async () => {
@@ -23,9 +25,15 @@ const NavBar = () => {
         setTypes(response.data.results);
     }
 
+    const getVersions = async () => {
+        const response = await VersionService.fetchVersions();
+        setVersions(response.data.results);
+    }
+
     useEffect(() => {
         getGeneration();
         getTypes();
+        getVersions();
     }, [])
 
     //Affichage -> return
@@ -53,6 +61,14 @@ const NavBar = () => {
                             {types.map((type) => {  
                                 return <NavDropdown.Item href={"/types/"+type.url.slice(30).replaceAll("/", "")}>
                                     {type.name[0].toUpperCase() + type.name.slice(1)}
+                                    {/* <Link to={"/generations/"+generation.url.slice(36).replaceAll("/", "")} replace >{generation.name[0].toUpperCase() + generation.name.slice(1)}</Link> */}
+                                </NavDropdown.Item>
+                            })}
+                        </NavDropdown>
+                        <NavDropdown title="Versions" id="basic-nav-dropdown-versions">
+                            {versions.map((version) => {  
+                                return <NavDropdown.Item href={"/versions/"+version.url.slice(40).replaceAll("/", "")}>
+                                    {version.name[0].toUpperCase() + version.name.slice(1)}
                                     {/* <Link to={"/generations/"+generation.url.slice(36).replaceAll("/", "")} replace >{generation.name[0].toUpperCase() + generation.name.slice(1)}</Link> */}
                                 </NavDropdown.Item>
                             })}

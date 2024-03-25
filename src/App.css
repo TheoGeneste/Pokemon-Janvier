@@ -251,3 +251,8 @@ a{
   max-height: 30vh;
   overflow-y: scroll;
 }
+
+.active > .page-link {
+  background-color: var(--title-color) !important;
+  border-color: var(--title-color) !important;
+}
