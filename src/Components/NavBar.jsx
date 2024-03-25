@@ -5,18 +5,27 @@ import Navbar from 'react-bootstrap/Navbar';
 import NavDropdown from 'react-bootstrap/NavDropdown';
 import { Link } from "react-router-dom";
 import GenerationService from "../Services/GenerationService";
+import TypeService from "../Services/TypeService";
 
 const NavBar = () => {
     // États -> States
     const [generations, setGenerations] = useState([])
+    const [types, setTypes] = useState([]);
+
     // Comportements -> Les functions
     const getGeneration = async () => {
         const response = await GenerationService.fetchGeneration();
         setGenerations(response.data.results);
     }
 
+    const getTypes = async () => {
+        const response = await TypeService.fetchTypeByURL("https://pokeapi.co/api/v2/type");
+        setTypes(response.data.results);
+    }
+
     useEffect(() => {
-        getGeneration()
+        getGeneration();
+        getTypes();
     }, [])
 
     //Affichage -> return
@@ -36,6 +45,14 @@ const NavBar = () => {
                             {generations.map((generation) => {  
                                 return <NavDropdown.Item href={"/generations/"+generation.url.slice(36).replaceAll("/", "")}>
                                     {generation.name[0].toUpperCase() + generation.name.slice(1)}
+                                    {/* <Link to={"/generations/"+generation.url.slice(36).replaceAll("/", "")} replace >{generation.name[0].toUpperCase() + generation.name.slice(1)}</Link> */}
+                                </NavDropdown.Item>
+                            })}
+                        </NavDropdown>
+                        <NavDropdown title="Types" id="basic-nav-dropdown-types">
+                            {types.map((type) => {  
+                                return <NavDropdown.Item href={"/types/"+type.url.slice(30).replaceAll("/", "")}>
+                                    {type.name[0].toUpperCase() + type.name.slice(1)}
                                     {/* <Link to={"/generations/"+generation.url.slice(36).replaceAll("/", "")} replace >{generation.name[0].toUpperCase() + generation.name.slice(1)}</Link> */}
                                 </NavDropdown.Item>
                             })}

@@ -7,6 +7,7 @@ import GenerationsPage from './Pages/GenerationsPage';
 import Footer from './Components/Footer';
 import { Container } from 'react-bootstrap';
 import PokemonDetailPage from './Pages/PokemonDetailPage';
+import PokemonByType from './Pages/PokemonByType';
 
 function App() {
   return <>
@@ -18,11 +19,12 @@ function App() {
           <Route path="/" element={<PokemonsPage />} />
           <Route path="/pokemons" element={<PokemonsPage />} />
           <Route path='/generations/:idGeneration' element={<GenerationsPage />} />
+          <Route path='/types/:idType' element={<PokemonByType />} />
           <Route path='/pokemon/:id' element={<PokemonDetailPage />} />
         </Routes>
       </Container>
       <Footer />
-    </BrowserRouter>
+    </BrowserRouter>  
   </>;
 }
 

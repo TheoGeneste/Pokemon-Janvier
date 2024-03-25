@@ -246,3 +246,8 @@ a{
 .shield {
   background-color: var(--pokemon-color-Shield);
 }
+
+.dropdown-menu.show{
+  max-height: 30vh;
+  overflow-y: scroll;
+}

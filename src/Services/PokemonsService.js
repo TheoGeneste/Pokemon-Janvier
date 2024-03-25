@@ -17,6 +17,10 @@ class PokemonsService {
     static fetchPokemonByGeneration(id){
         return axios.get("https://pokeapi.co/api/v2/generation/"+id);
     }
+
+    static fetchPokemonByType(id){
+        return axios.get("https://pokeapi.co/api/v2/type/"+id);
+    }
 }
 
 export default PokemonsService;
