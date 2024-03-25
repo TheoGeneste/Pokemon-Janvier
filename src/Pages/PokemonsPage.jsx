@@ -8,7 +8,7 @@ const PokemonsPage = () => {
     // États -> States
     const [pokemons, setPokemons] = useState([]);
     const [pokemonsFiltered, setPokemonFiltered] = useState([])
-    const [pokemonPerPage, setPokemonPerPage] = useState(20);
+    const [pokemonPerPage, setPokemonsFiltered] = useState(20);
     const [currentPage, setCurrentPage] = useState(1);
     const [maxPage, setMaxPage] = useState(20);
     const [searchValue, setSearchValue] = useState("")
@@ -19,7 +19,7 @@ const PokemonsPage = () => {
         const response = await PokemonsService.fetchPokemon(pokemonPerPage, nombrePokemonAffiche);
         setMaxPage(Math.ceil(response.data.count / pokemonPerPage));
         setPokemons(response.data.results);
-        setPokemonFiltered(response.data.results);
+        setPokemonsFiltered(response.data.results);
     }
 
     const handleChange = (e) => {
@@ -35,9 +35,9 @@ const PokemonsPage = () => {
             let res = pokemons.filter((pokemon) => {
                 return pokemon.name.toLowerCase().includes(searchValue.toLowerCase())
             })
-            setPokemonFiltered(res);
+            setPokemonsFiltered(res);
         }else{
-            setPokemonFiltered(pokemons)
+            setPokemonsFiltered(pokemons)
         }
     }, [searchValue])
 
